@@ -13,7 +13,7 @@ inputPush.disabled = true;
 btnPush.disabled = true;
 
 function saveNumber() {
-    const entered = getValidNumber(inputNumber, message);
+    const entered = getValidNumber(inputNumber, message, "Digitar un numero");
     if (entered === null) return;
 
     const exists = numberExists(numbers, entered)
@@ -37,7 +37,7 @@ function saveNumber() {
 
 function pushNumber() {
     let temp = 0;
-    const entered = getValidNumber(inputPush, message);
+    const entered = getValidNumber(inputPush, message, "Digitar un nuemro");
     if (entered === null) return;
 
     const exists = numberExists(numbers, entered)

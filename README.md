@@ -44,8 +44,12 @@ js-roadmap/
 │   ├── 03-eliminar-elementos/
 │   ├── 04-invertir-array/
 │   └── 05-ordenar-array/
+│   └── 06-evitar-duplicados-ordenados/
 │
 ├── 05-funciones/
+│   ├── 01-dividir-logica-en-funciones/
+│   ├── 02-filtrar-analizar-numeros/
+│
 ├── 06-objetos/
 ├── 07-dom/
 ├── 08-eventos/

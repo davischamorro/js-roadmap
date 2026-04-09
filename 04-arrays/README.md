@@ -13,3 +13,4 @@
 3. Eliminar elementos
 4. Invertir array
 5. Ordenar array
+6. Evitar duplicados y ordenar
