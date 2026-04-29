@@ -12,7 +12,7 @@ btnSave.addEventListener('click', saveNumber);
 btnReset.addEventListener('click', reset);
 
 function saveNumber() {
-    const entered = getValidNumber(inputNumber, message, "Digite un numero");
+    const entered = getValidNumber(inputNumber, message, "Digite un número");
     if (entered === null) return;
 
     numbers.push(entered);
@@ -20,16 +20,13 @@ function saveNumber() {
 
     if (numbers.length === 8) {
         resetUI("save");
-        let avge = avg(numbers);
-        let newArray = arrayFilter(numbers, avge);
-        newArray.length > 0 ?
-            newMessage.textContent = `
-                Promedio: ${avge}
-                \nCantidad mayores al promedio: ${newArray.length}
-                \nMayores al promedio: [${newArray.join(', ')}]` :
-            newMessage.textContent =
-            `Promedio: ${avge}
-                \nno hay mas resultados`;
+        const newArray = getLongestConsecutiveSequence(numbers);
+        if (newArray.length > 1) {
+            newMessage.textContent = `Segmento mas largo: [${newArray.join(', ')}]
+            Cantidad: ${newArray.length}`;
+        } else {
+            newMessage.textContent = `No se encontraron segmentos consecutivos ascendentes`;
+        }
     }
     message.textContent = `[${numbers.join(', ')}]`;
 }
@@ -41,38 +38,27 @@ function reset() {
     newMessage.textContent = '';
 }
 
-function avg(array) {
-    let sum = 0;
-    for (let number of array) {
-        sum += number
-    }
-    return sum / array.length;
-}
+function getLongestConsecutiveSequence(array) {
+    let currentSegment = [];
+    let longestSegment = [];
 
-function arrayFilter(array, avge) {
-    let newArray = [];
-    for (let number of array) {
-        if (number > avge) {
-            newArray.push(number)
+    currentSegment.push(array[0]);
+
+    for (let i = 1; i < array.length; i++) {
+        if (array[i] === array[i - 1] + 1) {
+            currentSegment.push(array[i]);
+        } else {
+            if (currentSegment.length > longestSegment.length) {
+                longestSegment = currentSegment
+            }
+            currentSegment = [array[i]];
         }
     }
-    return newArray;
-}
 
-function getValidNumber(input, errorContainer, errorMessage) {
-    const textValue = input.value.trim();
-    if (textValue === '') {
-        errorContainer.textContent = errorMessage;
-        return null;
+    if (currentSegment.length > longestSegment.length) {
+        longestSegment = currentSegment
     }
-
-    const number = Number(textValue);
-    if (isNaN(number)) {
-        errorContainer.textContent = "No es un número"
-        return null;
-    }
-
-    return number;
+    return longestSegment;
 }
 
 /**
@@ -97,9 +83,25 @@ function resetUI(action) {
             inputNumber.disabled = false;
             break;
         default:
-            console.warn(`No es una opcion: ${action}`);
+            console.warn(`No es una accion: ${option}`);
     }
 }
+
+function getValidNumber(input, errorContainer, errorMessage) {
+    const textValue = input.value.trim();
+    if (textValue === '') {
+        errorContainer.textContent = errorMessage;
+        return null;
+    }
+
+    const number = Number(textValue);
+    if (isNaN(number)) {
+        errorContainer.textContent = "No es un número";
+        return null;
+    }
+    return number;
+}
+
 
 document.querySelectorAll('.numeric-only').forEach(input => {
     input.addEventListener('input', e => {

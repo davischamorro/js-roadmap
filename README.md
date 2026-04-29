@@ -49,6 +49,8 @@ js-roadmap/
 ├── 05-funciones/
 │   ├── 01-dividir-logica-en-funciones/
 │   ├── 02-filtrar-analizar-numeros/
+│   ├── 03-buscar-segmento-numeros-consecutivos/
+│   └── 04-control-copias-array/
 │
 ├── 06-objetos/
 ├── 07-dom/
